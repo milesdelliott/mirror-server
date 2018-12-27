@@ -46,9 +46,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
 app.use('/data', dataRouter);
 app.use('/command', commandRouter);
+app.use('/mirror', express.static('../mirror/build/'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
