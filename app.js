@@ -8,10 +8,18 @@ const socketIO = require('socket.io');
 
 var app = express();
 
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //socket setup
 const io = socketIO.listen(app.listen(3010));
 io.on('connection', socket => {
-    console.log('mirror connected')
+    //console.log('mirror connected')
     socket.on('gesture', (gesture) => {
         console.log('gesture: ', gesture)
         io.sockets.emit('gesture', gesture)
@@ -19,7 +27,7 @@ io.on('connection', socket => {
 
     // disconnect is fired when a client leaves the server
     socket.on('disconnect', () => {
-        console.log('mirror disconnected')
+        //console.log('mirror disconnected')
     })
 })
 
