@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
 });
 
 //socket setup
-const io = socketIO.listen(app.listen(3010));
+const io = socketIO.listen(app.listen(3009));
 io.on('connection', socket => {
     //console.log('mirror connected')
     socket.on('gesture', (gesture) => {
