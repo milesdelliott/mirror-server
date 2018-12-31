@@ -32,6 +32,7 @@ io.on('connection', socket => {
 
 var indexRouter = require('./routes/index');
 var dataRouter = require('./routes/data');
+var controlRouter = require('./routes/control');
 var commandRouter = require('./routes/command')(io);
 
 
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/data', dataRouter);
+app.use('/control', controlRouter);
 app.use('/command', commandRouter);
 app.use('/mirror', express.static('../mirror/build/'))
 
