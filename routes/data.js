@@ -48,6 +48,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
+  console.log('color');
   colorRequest(n => {
     req.mirrorData.color = n;
 
@@ -56,6 +57,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
+  console.log('calendar');
   calendarRequest(n => {
     req.mirrorData.calendar = n;
     next();
@@ -63,6 +65,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
+  console.log('reddit');
   redditRequest(n => {
     req.mirrorData.reddit = n.data.children.filter(i => {
       const redditURL = url.parse(i.data.url);
@@ -76,6 +79,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
+  console.log('respond');
   res.json({ data: req.mirrorData });
 });
 
