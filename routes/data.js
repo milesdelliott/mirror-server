@@ -44,7 +44,10 @@ router.get('/', function(req, res, next) {
     req.mirrorData.news = n;
 
     next();
-  })(e => createError('400'));
+  })(e => {
+    console.log(e);
+    createError('400');
+  });
 });
 
 router.get('/', function(req, res, next) {
