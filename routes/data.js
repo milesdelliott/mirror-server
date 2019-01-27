@@ -8,6 +8,11 @@ const { calendarRequest } = require('../lib/calendar');
 
 var createError = require('http-errors');
 
+var error = e => {
+  console.log(e);
+  createError('400');
+};
+
 var express = require('express');
 var router = express.Router();
 
@@ -17,7 +22,7 @@ router.get('/', function(req, res, next) {
   currentWeatherRequest(w => {
     req.mirrorData.currentWeather = w;
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
@@ -26,7 +31,7 @@ router.get('/', function(req, res, next) {
     req.mirrorData.forecast = w;
 
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/w', function(req, res, next) {
@@ -35,7 +40,7 @@ router.get('/w', function(req, res, next) {
       req.mirrorData.moon = w.phasedata;
     }
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
@@ -46,7 +51,7 @@ router.get('/', function(req, res, next) {
     next();
   })(e => {
     console.log(e);
-    createError('400');
+    error(e);
   });
 });
 
@@ -56,7 +61,7 @@ router.get('/', function(req, res, next) {
     req.mirrorData.color = n;
 
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
@@ -64,7 +69,7 @@ router.get('/', function(req, res, next) {
   calendarRequest(n => {
     req.mirrorData.calendar = n;
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
@@ -78,7 +83,7 @@ router.get('/', function(req, res, next) {
     });
 
     next();
-  })(e => createError('400'));
+  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
