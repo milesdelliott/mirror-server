@@ -56,15 +56,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  console.log('color');
-  colorRequest(n => {
-    req.mirrorData.color = n;
-
-    next();
-  })(e => error(e));
-});
-
-router.get('/', function(req, res, next) {
   console.log('calendar');
   calendarRequest(n => {
     req.mirrorData.calendar = n;
