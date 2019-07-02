@@ -92,8 +92,9 @@ router.get('/', function(req, res, next) {
 const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 const dateTime = date+' '+time;
+const refresh = 0;
 console.log(dateTime)
-  res.json({ data: req.mirrorData });
+  res.json({ data: req.mirrorData, refresh });
 });
 
 module.exports = router;
