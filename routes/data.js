@@ -8,7 +8,7 @@ const { calendarRequest } = require('../lib/calendar');
 
 var createError = require('http-errors');
 
-var newsFetch = true;
+var lastNewsFetchTime = false;
 
 var error = e => {
   console.log(e);
@@ -47,9 +47,14 @@ router.get('/w', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   console.log('news');
+  const minute = 1000 * 60 * 60
+  const now = new Date();
+  if (!lastNewsFetchTime || ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
+    next();
+  }
   newsRequest(n => {
     req.mirrorData.news = n;
-    newsFetch = true;
+    newsFetch = now.getTime();
     req.mirrorDate.newsFetch = 100
     next();
   })(e => {
