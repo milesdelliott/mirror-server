@@ -8,6 +8,8 @@ const { calendarRequest } = require('../lib/calendar');
 
 var createError = require('http-errors');
 
+var newsFetch = true;
+
 var error = e => {
   console.log(e);
   createError('400');
@@ -47,7 +49,8 @@ router.get('/', function(req, res, next) {
   console.log('news');
   newsRequest(n => {
     req.mirrorData.news = n;
-
+    newsFetch = true;
+    req.mirrorDate.newsFetch = 100
     next();
   })(e => {
     console.log(e);
