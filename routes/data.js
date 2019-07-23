@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
   console.log('news');
   const minute = 1000 * 60 * 60
   const now = new Date();
-  console.log('news comparison', lastNewsFetchTime - now.getTime(), minute * 5)
+  console.log('news comparison', lastNewsFetchTime, now.getTime(), minute * 5)
   if (!lastNewsFetchTime || ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
     console.log('news too soon!')
     next();
