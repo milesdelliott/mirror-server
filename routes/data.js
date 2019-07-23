@@ -1,10 +1,6 @@
 const { currentWeatherRequest, forecastRequest } = require('../lib/weather');
 const url = require('url');
 const { newsRequest } = require('../lib/news');
-const { redditRequest } = require('../lib/reddit');
-const { moonRequest } = require('../lib/moon');
-const { colorRequest } = require('../lib/color');
-const { calendarRequest } = require('../lib/calendar');
 
 var createError = require('http-errors');
 
@@ -36,22 +32,16 @@ router.get('/', function(req, res, next) {
   })(e => error(e));
 });
 
-router.get('/w', function(req, res, next) {
-  moonRequest(w => {
-    if (!w.error) {
-      req.mirrorData.moon = w.phasedata;
-    }
-    next();
-  })(e => error(e));
-});
-
 router.get('/', function(req, res, next) {
   console.log('news');
   const minute = 1000 * 60 * 60
   const now = new Date();
+  console.log('news comparison', lastNewsFetchTime - now.getTime(), minute * 5)
   if (!lastNewsFetchTime || ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
+    console.log('news too soon!')
     next();
   }
+  console.log('news is requesting')
   newsRequest(n => {
     req.mirrorData.news = n;
     newsFetch = now.getTime();
@@ -61,28 +51,6 @@ router.get('/', function(req, res, next) {
     console.log(e);
     error(e);
   });
-});
-
-router.get('/', function(req, res, next) {
-  console.log('calendar');
-  calendarRequest(n => {
-    req.mirrorData.calendar = n;
-    next();
-  })(e => error(e));
-});
-
-router.get('/', function(req, res, next) {
-  console.log('reddit');
-  redditRequest(n => {
-    req.mirrorData.reddit = n.data.children.filter(i => {
-      const redditURL = url.parse(i.data.url);
-      return !['v.redd.it', 'i.imgur.com', 'imgur.com', 'gfycat.com'].includes(
-        redditURL.hostname
-      );
-    });
-
-    next();
-  })(e => error(e));
 });
 
 router.get('/', function(req, res, next) {
