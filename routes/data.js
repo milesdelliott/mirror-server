@@ -43,6 +43,7 @@ router.get('/', function(req, res, next) {
   }
   console.log('news is requesting')
   newsRequest(n => {
+    console.log('req', req);
     req.mirrorData.news = n;
     newsFetch = now.getTime();
     req.mirrorDate.newsFetch = 100
