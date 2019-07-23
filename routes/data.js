@@ -1,6 +1,8 @@
 const { currentWeatherRequest, forecastRequest } = require('../lib/weather');
 const url = require('url');
 const { newsRequest } = require('../lib/news');
+const minute = 1000 * 60 * 60
+const now = new Date();
 
 var createError = require('http-errors');
 
@@ -34,8 +36,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   console.log('news');
-  const minute = 1000 * 60 * 60
-  const now = new Date();
+  
   console.log('news comparison', lastNewsFetchTime, now.getTime(), minute * 5)
   if (!lastNewsFetchTime || ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
     console.log('news too soon!')
@@ -44,12 +45,13 @@ router.get('/', function(req, res, next) {
   console.log('news is requesting')
   newsRequest(n => {
     req.mirrorData.news = n;
-    newsFetch = now.getTime();
+    lastNewsFetchTime = now.getTime();
     req.mirrorData.newsFetch = 100
     next();
   })(e => {
     console.log(e);
     error(e);
+    next();
   });
 });
 
