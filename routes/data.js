@@ -46,7 +46,7 @@ router.get('/', function(req, res, next) {
     console.log('req', req);
     req.mirrorData.news = n;
     newsFetch = now.getTime();
-    req.mirrorDate.newsFetch = 100
+    req.mirrorData.newsFetch = 100
     next();
   })(e => {
     console.log(e);
