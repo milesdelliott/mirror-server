@@ -7,7 +7,7 @@ const now = new Date();
 var createError = require('http-errors');
 
 var lastNewsFetchTime = false;
-
+var newsData = false;
 var error = e => {
   console.log(e);
   createError('400');
@@ -39,12 +39,13 @@ router.get('/', function(req, res, next) {
   
   console.log('news comparison', lastNewsFetchTime, now.getTime(), minute * 5)
   if (!lastNewsFetchTime || ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
-    console.log('news too soon!')
-    next();
+    req.mirrorData.news = newsData;
+    //next();
   }
   console.log('news is requesting')
   newsRequest(n => {
     req.mirrorData.news = n;
+    newsData = n;
     lastNewsFetchTime = now.getTime();
     req.mirrorData.newsFetch = 100
     next();
