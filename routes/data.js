@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
     next();
   })(e => error(e));
 });
-/*
+
 router.get('/', function(req, res, next) {
   console.log('news');
   
@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
     next();
   });
 });
-*/
+
 router.get('/', function(req, res, next) {
   console.log('respond');
  const today = new Date();
