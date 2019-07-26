@@ -36,11 +36,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   console.log('news');
-  if (lastNewsFetchTime && ((lastNewsFetchTime - now.getTime()) < (minute * 5) ) ) {
-    console.log('old news');
-    req.mirrorData.news = newsData;
-    next();
-  } else {
+  
     console.log('new news')
   newsRequest(n => {
     req.mirrorData.news = n;
@@ -53,7 +49,6 @@ router.get('/', function(req, res, next) {
     error(e);
     next();
   });
-  }
   
 });
 
