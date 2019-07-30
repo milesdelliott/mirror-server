@@ -15,31 +15,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-//socket setup
-const io = socketIO.listen(app.listen(3010));
-io.on('connection', socket => {
-    //console.log('mirror connected')
-    socket.on('gesture', (gesture) => {
-        console.log('gesture: ', gesture)
-        io.sockets.emit('gesture', gesture)
-    })
-
-    // disconnect is fired when a client leaves the server
-    socket.on('disconnect', () => {
-        //console.log('mirror disconnected')
-    })
-})
-
 var indexRouter = require('./routes/index');
 var dataRouter = require('./routes/data');
-var controlRouter = require('./routes/control');
-var commandRouter = require('./routes/command')(io);
 
-
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -50,8 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/data', dataRouter);
-app.use('/control', controlRouter);
-app.use('/command', commandRouter);
 app.use('/mirror', express.static('../mirror/build/'))
 
 // catch 404 and forward to error handler
